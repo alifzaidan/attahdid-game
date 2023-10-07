@@ -13,7 +13,7 @@ public class MovementLogic : MonoBehaviour
     Vector3 moveDirection;
     bool grounded = true, aerialboost = true, AimMode = false, TPSMode = true;
     public Animator anim;
-    //public CameraLogic camlogic;
+    public CameraLogic camlogic;
 
     // Start is called before the first frame update
     void Start()
@@ -83,6 +83,26 @@ public class MovementLogic : MonoBehaviour
         grounded = true;
         aerialboost = true;
         anim.SetBool("Jump", false);
+    }
+
+    public void aimModeAdjuster()
+    {
+        if (Input.GetKeyDown(KeyCode.Mouse1)){
+
+            Debug.Log("mouse1");
+            if (AimMode){
+                TPSMode = true;
+                AimMode = false;
+                anim.SetBool ("AimMode", false);
+            }
+            else if (TPSMode)
+            {
+                TPSMode = false;
+                AimMode = true;
+                anim.SetBool ("AimMode", true);
+            }
+            camlogic.CameraModeChanger(TPSMode, AimMode);
+        }
     }
 
 
